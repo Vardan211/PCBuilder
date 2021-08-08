@@ -15,17 +15,29 @@ namespace PCBuilder.Controllers
             _buildService = buildService;
         }
 
-        [HttpGet]
+        [HttpGet("Get All")]
         public IActionResult Get()
         {
             var result = _buildService.GetAll();
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("Add")]
         public IActionResult Add(ComputerBuildEntity buildEntity)
         {
             _buildService.Add(buildEntity);
+            return Ok();
+        }
+        [HttpPost("Delete")]
+        public IActionResult Delete(int id)
+        {
+            _buildService.Delete(id);
+            return Ok();
+        }
+        [HttpPost("Change")]
+        public IActionResult Change(int id,ComputerBuildEntity computerBuildEntity)
+        {
+            _buildService.Change(id,computerBuildEntity);
             return Ok();
         }
     }

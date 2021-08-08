@@ -22,6 +22,7 @@ namespace PCBuilder
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "PCBuilder", Version = "v1"}); });
             services.AddSingleton<IBuildService, BuildService>();
+            services.AddSingleton<IComponentsService, ComponentsService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

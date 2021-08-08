@@ -7,5 +7,7 @@ namespace PCBuilder.Domain
     {
         List<ComputerBuildEntity> GetAll();
         void Add(ComputerBuildEntity computerBuildEntity);
+        void Delete(int id);
+        void Change(int id,ComputerBuildEntity computerBuildEntity);
     }
 }
