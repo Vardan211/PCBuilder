@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PCBuilder.DataAccess;
 using PCBuilder.DataAccess.Entities;
 using PCBuilder.Domain;
 
@@ -9,35 +10,35 @@ namespace PCBuilder.Controllers
     public class BuildController : ControllerBase
     {
         private readonly IBuildService _buildService;
-
+       
         public BuildController(IBuildService buildService)
         {
             _buildService = buildService;
         }
 
-        [HttpGet("Get All")]
+        [HttpGet]
         public IActionResult Get()
         {
             var result = _buildService.GetAll();
             return Ok(result);
         }
 
-        [HttpPost("Add")]
+        [HttpPost]
         public IActionResult Add(ComputerBuildEntity buildEntity)
         {
             _buildService.Add(buildEntity);
             return Ok();
         }
-        [HttpPost("Delete")]
-        public IActionResult Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete(ComputerBuildEntity buildEntity)
         {
-            _buildService.Delete(id);
+            _buildService.Delete(buildEntity);
             return Ok();
         }
-        [HttpPost("Change")]
-        public IActionResult Change(int id,ComputerBuildEntity computerBuildEntity)
+        [HttpPut]
+        public IActionResult Change(ComputerBuildEntity computerBuildEntity)
         {
-            _buildService.Change(id,computerBuildEntity);
+            _buildService.Change(computerBuildEntity);
             return Ok();
         }
     }

@@ -4,10 +4,10 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string GPU { get; set; }
-        public string CPU { get; set; }
-        public string MB { get; set; }
+        public int? GPUId { get; set; }
+        public int? CPUId { get; set; }
+        public int? MBId { get; set; }
         public decimal Price { get; set; }
-
+        
     }
 }

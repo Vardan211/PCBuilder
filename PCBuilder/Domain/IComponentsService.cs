@@ -8,9 +8,12 @@ namespace PCBuilder.Domain
 {
     public interface IComponentsService
     {
-        void AddGPU(OtherComponentsEntity otherComponentsEntity);
-        void AddCPUorMB(CPU_MB_ComponentsEntity cpu_mb,string type);
-        bool compatibility(int idGPU, int idCPU, int idMB);
-        ComputerBuildEntity assembling(string name,int idGPU, int idCPU, int idMB);
+        Task Add(ComponentEntity component);
+        Task Remove(ComponentEntity component);
+        Task Update(ComponentEntity component);
+        List<ComponentEntity> GetAll();
+        List<ComponentEntity> GetByType(int categoryId);
+        List<ComponentEntity> GetById(int id);
+        ComputerBuildEntity Assembly(string name,int idGPU, int idCPU, int idMB);
     }
 }

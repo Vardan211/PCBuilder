@@ -1,50 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using PCBuilder.DataAccess;
 using PCBuilder.DataAccess.Entities;
 
 namespace PCBuilder.Domain
 {
     public class BuildService : IBuildService
     {
-        private List<ComputerBuildEntity> Builds { get; set; } = new List<ComputerBuildEntity>
+        private readonly DataContext _context;
+        private readonly ICompatibilityService _compatibilityService;
+        public BuildService(ICompatibilityService compatibilityService, DataContext context)
         {
-            new ComputerBuildEntity
-            {
-                Id = 1, Name = "First Build",  Price = 100290
-            },
-            new ComputerBuildEntity
-            {
-                Id = 2, Name = "Second Build", Price = 100290
-            },
-            new ComputerBuildEntity
-            {
-                Id = 3, Name = "Third Build", Price = 100290
-            }
-        };
-        
+            _compatibilityService = compatibilityService;
+            _context = context;
+        }
         public List<ComputerBuildEntity> GetAll()
         {
-            return Builds;
+            return _context.Builds.ToList();
         }
 
-        public void Add(ComputerBuildEntity computerBuildEntity)
+        public async Task Add(ComputerBuildEntity computerBuildEntity)
         {
-            Builds.Add(computerBuildEntity);
-        }
-        public void Delete(int id)
-        {
-            var itemToRemove = Builds.SingleOrDefault(r => r.Id == id);
-            if (itemToRemove != null)
-                Builds.Remove(itemToRemove);
-        }
-        public void Change(int id,ComputerBuildEntity computerBuildEntity)
-        {
-            foreach(ComputerBuildEntity pc in Builds.Where(w => w.Id == id))
+            
+            if (_compatibilityService.compatibility((int)computerBuildEntity.GPUId, (int)computerBuildEntity.CPUId, (int)computerBuildEntity.MBId))
             {
-                pc.Id = computerBuildEntity.Id;
-                pc.Name = computerBuildEntity.Name;
-                pc.Price = computerBuildEntity.Price;
+                await _context.Builds.AddAsync(computerBuildEntity);
+                await _context.SaveChangesAsync();
             }
+            throw new Exception("Build is not compatible");
+        }
+        public async Task Delete(ComputerBuildEntity computerBuildEntity)
+        {
+            _context.Builds.Remove(computerBuildEntity);
+            await _context.SaveChangesAsync();
+        }
+        public async Task Change(ComputerBuildEntity computerBuildEntity)
+        {
+            _context.Builds.Update(computerBuildEntity);
+            await _context.SaveChangesAsync();
         }
     }
 }

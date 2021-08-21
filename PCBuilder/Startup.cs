@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using PCBuilder.DataAccess;
 using PCBuilder.Domain;
 
 namespace PCBuilder
@@ -21,8 +23,11 @@ namespace PCBuilder
         {
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "PCBuilder", Version = "v1"}); });
-            services.AddSingleton<IBuildService, BuildService>();
-            services.AddSingleton<IComponentsService, ComponentsService>();
+            services.AddDbContext<DataContext>(x =>
+                x.UseNpgsql(Configuration.GetConnectionString("Db")));
+            services.AddScoped<IBuildService, BuildService>();
+            services.AddScoped<IComponentsService, ComponentsService>();
+            services.AddScoped<ICompatibilityService, CompatibilityService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

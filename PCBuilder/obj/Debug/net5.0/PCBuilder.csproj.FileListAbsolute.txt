@@ -56,3 +56,12 @@ C:\Users\Vardan\PCBuilder\PCBuilder\obj\Debug\net5.0\PCBuilder.dll
 C:\Users\Vardan\PCBuilder\PCBuilder\obj\Debug\net5.0\ref\PCBuilder.dll
 C:\Users\Vardan\PCBuilder\PCBuilder\obj\Debug\net5.0\PCBuilder.pdb
 C:\Users\Vardan\PCBuilder\PCBuilder\obj\Debug\net5.0\PCBuilder.genruntimeconfig.cache
+C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\Humanizer.dll
+C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\Npgsql.dll
+C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
