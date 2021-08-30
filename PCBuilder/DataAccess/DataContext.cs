@@ -14,6 +14,10 @@ namespace PCBuilder.DataAccess
         public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<ComponentEntity> Components { get; set; }
         public DbSet<ComputerBuildEntity> Builds { get; set; }
+        public DbSet<ChatEntity> Chats { get; set; }
+        public DbSet<ChatUserEntity> ChatUsers{ get; set; }
+        public DbSet<MessageEntity> Messages { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options):base(options) 
         {
 

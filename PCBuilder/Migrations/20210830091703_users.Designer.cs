@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PCBuilder.DataAccess;
@@ -9,9 +10,10 @@ using PCBuilder.DataAccess;
 namespace PCBuilder.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210830091703_users")]
+    partial class users
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,40 +240,6 @@ namespace PCBuilder.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("PCBuilder.DataAccess.Entities.ChatEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Chats");
-                });
-
-            modelBuilder.Entity("PCBuilder.DataAccess.Entities.ChatUserEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int?>("ChatId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChatId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ChatUsers");
-                });
-
             modelBuilder.Entity("PCBuilder.DataAccess.Entities.ComponentEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -325,35 +293,6 @@ namespace PCBuilder.Migrations
                     b.ToTable("Builds");
                 });
 
-            modelBuilder.Entity("PCBuilder.DataAccess.Entities.MessageEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int?>("ChatEntityId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("ChatId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChatEntityId");
-
-                    b.ToTable("Messages");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
@@ -405,21 +344,6 @@ namespace PCBuilder.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PCBuilder.DataAccess.Entities.ChatUserEntity", b =>
-                {
-                    b.HasOne("PCBuilder.DataAccess.Entities.ChatEntity", "Chat")
-                        .WithMany()
-                        .HasForeignKey("ChatId");
-
-                    b.HasOne("PCBuilder.DataAccess.Entities.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Chat");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("PCBuilder.DataAccess.Entities.ComponentEntity", b =>
                 {
                     b.HasOne("PCBuilder.DataAccess.Entities.CategoryEntity", "Category")
@@ -431,21 +355,9 @@ namespace PCBuilder.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("PCBuilder.DataAccess.Entities.MessageEntity", b =>
-                {
-                    b.HasOne("PCBuilder.DataAccess.Entities.ChatEntity", null)
-                        .WithMany("Messages")
-                        .HasForeignKey("ChatEntityId");
-                });
-
             modelBuilder.Entity("PCBuilder.DataAccess.Entities.CategoryEntity", b =>
                 {
                     b.Navigation("ComponentEntities");
-                });
-
-            modelBuilder.Entity("PCBuilder.DataAccess.Entities.ChatEntity", b =>
-                {
-                    b.Navigation("Messages");
                 });
 #pragma warning restore 612, 618
         }

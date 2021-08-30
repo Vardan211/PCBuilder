@@ -77,9 +77,9 @@ namespace PCBuilder
                         ValidateAudience = false,
                         ValidateIssuer = false
                     };
-                });            
-            
+                });                        
             services.AddAuthorization();
+
             services.AddScoped<IBuildService, BuildService>();
             services.AddScoped<IComponentsService, ComponentsService>();
             services.AddScoped<ICompatibilityService, CompatibilityService>();

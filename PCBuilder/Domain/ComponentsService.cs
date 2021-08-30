@@ -18,7 +18,7 @@ namespace PCBuilder.Domain
         }
 
 
-        public ComputerBuildEntity Assembly(string name, int idGPU, int idCPU, int idMB)
+        public ComputerBuildEntity Assembly (string name, int idGPU, int idCPU, int idMB)
         {
             var gpu = _context.Components.FirstOrDefault(r => r.Id == idGPU);
             var cpu = _context.Components.FirstOrDefault(r => r.Id == idCPU);

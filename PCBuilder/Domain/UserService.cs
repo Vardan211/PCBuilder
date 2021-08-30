@@ -77,11 +77,13 @@ namespace PCBuilder.Domain
             };
 
             var result = await _userManager.CreateAsync(newUser, request.Password);
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == newUser.Email); 
-            await _userManager.AddToRoleAsync(user, "user");
+           
+            
 
             if (result.Succeeded)
             {
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == newUser.Email);
+                await _userManager.AddToRoleAsync(user, "user");
                 var roles = await _userManager.GetRolesAsync(user);
 
                 return new UserDto
