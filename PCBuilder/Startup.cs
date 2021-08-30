@@ -85,6 +85,7 @@ namespace PCBuilder
             services.AddScoped<ICompatibilityService, CompatibilityService>();
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IChatService, ChatService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

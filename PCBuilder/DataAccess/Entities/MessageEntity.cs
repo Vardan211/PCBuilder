@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PCBuilder.DataAccess.Entities
 {
@@ -10,7 +7,7 @@ namespace PCBuilder.DataAccess.Entities
         public int Id { get; set; }
         public string Text { get; set; }
         public int? UserId { get; set; }
-        public DateTime? CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
         public int? ChatId { get; set; }
     }
 }
