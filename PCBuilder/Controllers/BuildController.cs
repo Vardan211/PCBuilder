@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PCBuilder.DataAccess;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PCBuilder.DataAccess.Entities;
 using PCBuilder.Domain;
 
@@ -17,8 +18,12 @@ namespace PCBuilder.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "user")]
         public IActionResult Get()
         {
+            var username = HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier"))?.Value;
+            var role = HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("role"))?.Value;
+
             var result = _buildService.GetAll();
             return Ok(result);
         }
