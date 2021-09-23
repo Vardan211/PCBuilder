@@ -28,6 +28,11 @@ namespace PCBuilder.Domain
             _userManager = userManager;
         }
 
+        public async Task<ApplicationUser> GetUserByUsername(string username)
+        {
+            return await _userManager.FindByNameAsync(username);
+        }
+
         public async Task<UserDto> Login(LoginDto request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);

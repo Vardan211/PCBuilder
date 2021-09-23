@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PCBuilder.DataAccess.Entities;
@@ -18,20 +19,23 @@ namespace PCBuilder.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "user")]
+        [Authorize(Roles = "user, admin")]
         public IActionResult Get()
         {
-            var username = HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("nameidentifier"))?.Value;
-            var role = HttpContext.User.Claims.FirstOrDefault(x => x.Type.Contains("role"))?.Value;
+            var role = HttpContext.User.FindFirstValue(ClaimTypes.Role);
+            var userid = HttpContext.User.FindFirstValue(ClaimTypes.Name);
 
-            var result = _buildService.GetAll();
+            var result = _buildService.GetAll(role, userid);
             return Ok(result);
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin, user")]
         public IActionResult Add(ComputerBuildEntity buildEntity)
         {
-            _buildService.Add(buildEntity);
+            var role = HttpContext.User.FindFirstValue(ClaimTypes.Role);
+            var userid = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _buildService.Add(buildEntity, role, userid);
             return Ok();
         }
         [HttpDelete]

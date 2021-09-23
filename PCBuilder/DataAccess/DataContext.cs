@@ -17,6 +17,8 @@ namespace PCBuilder.DataAccess
         public DbSet<ChatEntity> Chats { get; set; }
         public DbSet<ChatUserEntity> ChatUsers{ get; set; }
         public DbSet<MessageEntity> Messages { get; set; }
+        public DbSet<OrderEntity> Orders { get; set; }
+
 
         public DataContext(DbContextOptions<DataContext> options):base(options) 
         {

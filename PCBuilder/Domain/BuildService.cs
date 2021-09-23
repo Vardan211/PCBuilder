@@ -16,16 +16,27 @@ namespace PCBuilder.Domain
             _compatibilityService = compatibilityService;
             _context = context;
         }
-        public List<ComputerBuildEntity> GetAll()
+        public List<ComputerBuildEntity> GetAll(string role, int userId)
         {
-            return _context.Builds.ToList();
+            if(role == "admin")
+            {
+                return _context.Builds.ToList();
+            }
+            return _context.Builds.Where(i => i.UserId == userId).ToList();
         }
 
-        public async Task Add(ComputerBuildEntity computerBuildEntity)
+        public async Task Add(ComputerBuildEntity computerBuildEntity,string role,  int userId)
         {
             
             if (_compatibilityService.compatibility((int)computerBuildEntity.GPUId, (int)computerBuildEntity.CPUId, (int)computerBuildEntity.MBId))
             {
+                var gpu = _context.Components.Find(computerBuildEntity.GPUId);
+                var cpu = _context.Components.Find(computerBuildEntity.CPUId);
+                var mb = _context.Components.Find(computerBuildEntity.MBId);
+                if(role == "user")
+                {
+                    computerBuildEntity.UserId = userId;
+                }
                 await _context.Builds.AddAsync(computerBuildEntity);
                 await _context.SaveChangesAsync();
             }
