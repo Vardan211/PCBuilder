@@ -6,8 +6,8 @@ namespace PCBuilder.Domain
 {
     public interface IBuildService
     {
-        List<ComputerBuildEntity> GetAll(string role, int userId);
-        Task Add(ComputerBuildEntity computerBuildEntity, string role, int userId);
+        Task<List<ComputerBuildEntity>> GetAll(string role, string username);
+        Task Add(ComputerBuildEntity computerBuildEntity, string role, string username);
         Task Delete(ComputerBuildEntity computerBuildEntity);
         Task Change(ComputerBuildEntity computerBuildEntity);
     }

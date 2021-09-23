@@ -10,17 +10,22 @@ namespace PCBuilder.Domain
     public class OrderService : IOrderService
     {
         private readonly DataContext _context;
+        private readonly IUserService _userService;
 
-        public OrderService(DataContext context)
+        public OrderService(DataContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
         public async Task Add(OrderEntity orderEntity, string role, string username)
         {
+            var user = await _userService.GetUserByUsername(username);
+            
             if (role == "user")
             {
-                orderEntity.UserName = username;
+                orderEntity.UserId = user.Id;
             }
+            
             orderEntity.OrderStatusId = "Processing";
             await _context.Orders.AddAsync(orderEntity);
             await _context.SaveChangesAsync();
@@ -38,13 +43,15 @@ namespace PCBuilder.Domain
             await _context.SaveChangesAsync();
         }
 
-        public List<OrderEntity> GetAll(string role, string username)
+        public async Task<List<OrderEntity>> GetAll(string role, string username)
         {
+            var user = await _userService.GetUserByUsername(username);
+
             if (role == "admin")
             {
                 return _context.Orders.ToList();
             }
-            return _context.Orders.Where(i => i.UserName == username).ToList();
+            return _context.Orders.Where(i => i.UserId == user.Id).ToList();
         }
     }
 }

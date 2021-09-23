@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PCBuilder.DataAccess.Entities;
@@ -23,9 +22,9 @@ namespace PCBuilder.Controllers
         public IActionResult Get()
         {
             var role = HttpContext.User.FindFirstValue(ClaimTypes.Role);
-            var userid = HttpContext.User.FindFirstValue(ClaimTypes.Name);
+            var username = HttpContext.User.FindFirstValue(ClaimTypes.Name);
 
-            var result = _buildService.GetAll(role, userid);
+            var result = _buildService.GetAll(role, username);
             return Ok(result);
         }
 

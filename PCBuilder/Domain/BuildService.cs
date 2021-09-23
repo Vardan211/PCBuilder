@@ -11,23 +11,29 @@ namespace PCBuilder.Domain
     {
         private readonly DataContext _context;
         private readonly ICompatibilityService _compatibilityService;
-        public BuildService(ICompatibilityService compatibilityService, DataContext context)
+        private readonly IUserService _userService;
+        
+        public BuildService(ICompatibilityService compatibilityService, DataContext context, IUserService userService)
         {
             _compatibilityService = compatibilityService;
             _context = context;
+            _userService = userService;
         }
-        public List<ComputerBuildEntity> GetAll(string role, int userId)
+        public async Task<List<ComputerBuildEntity>> GetAll(string role, string username)
         {
+            var user = await _userService.GetUserByUsername(username);
+
             if(role == "admin")
             {
                 return _context.Builds.ToList();
             }
-            return _context.Builds.Where(i => i.UserId == userId).ToList();
+            return _context.Builds.Where(i => i.UserId == user.Id).ToList();
         }
 
-        public async Task Add(ComputerBuildEntity computerBuildEntity,string role,  int userId)
+        public async Task Add(ComputerBuildEntity computerBuildEntity,string role, string username)
         {
-            
+            var user = await _userService.GetUserByUsername(username);
+
             if (_compatibilityService.compatibility((int)computerBuildEntity.GPUId, (int)computerBuildEntity.CPUId, (int)computerBuildEntity.MBId))
             {
                 var gpu = _context.Components.Find(computerBuildEntity.GPUId);
@@ -35,7 +41,7 @@ namespace PCBuilder.Domain
                 var mb = _context.Components.Find(computerBuildEntity.MBId);
                 if(role == "user")
                 {
-                    computerBuildEntity.UserId = userId;
+                    computerBuildEntity.UserId = user.Id;
                 }
                 await _context.Builds.AddAsync(computerBuildEntity);
                 await _context.SaveChangesAsync();
