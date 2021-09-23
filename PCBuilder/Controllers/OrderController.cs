@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PCBuilder.DataAccess.Entities;
 using PCBuilder.Domain;
 using PCBuilder.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -25,37 +20,37 @@ namespace PCBuilder.Controllers
 
         [HttpGet]
         [Authorize(Roles = "user, admin")]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             var role = HttpContext.User.FindFirstValue(ClaimTypes.Role);
             var userid = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var result = _orderService.GetAll(role, userid);
+            var result = await _orderService.GetAll(role, userid);
             return Ok(result);
         }
         [HttpPost]
         [Authorize(Roles = "user, admin")]
-        public IActionResult Add(OrderEntity orderEntity)
+        public async Task<IActionResult> Add(OrderDto orderDto)
         {
             var role = HttpContext.User.FindFirstValue(ClaimTypes.Role);
             var userid = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            _orderService.Add(orderEntity, role, userid);
+            await _orderService.Add(orderDto, role, userid);
             return Ok();
             
         }
         [HttpDelete]
         [Authorize(Roles = "admin")]
-        public IActionResult Delete(OrderEntity orderEntity)
+        public IActionResult Delete(OrderDto orderDto)
         {
-            _orderService.Delete(orderEntity);
+            _orderService.Delete(orderDto);
             return Ok();
         }
         [HttpPut]
         [Authorize(Roles = "admin")]
-        public IActionResult Change(OrderEntity orderEntity)
+        public async Task<IActionResult> Change(OrderDto orderDto)
         {
-            _orderService.Change(orderEntity);
+            await _orderService.Change(orderDto);
             return Ok();
         }
 

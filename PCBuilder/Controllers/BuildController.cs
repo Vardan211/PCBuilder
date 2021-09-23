@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PCBuilder.DataAccess.Entities;
@@ -19,34 +20,34 @@ namespace PCBuilder.Controllers
 
         [HttpGet]
         [Authorize(Roles = "user, admin")]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             var role = HttpContext.User.FindFirstValue(ClaimTypes.Role);
             var username = HttpContext.User.FindFirstValue(ClaimTypes.Name);
 
-            var result = _buildService.GetAll(role, username);
+            var result = await _buildService.GetAll(role, username);
             return Ok(result);
         }
 
         [HttpPost]
         [Authorize(Roles = "admin, user")]
-        public IActionResult Add(ComputerBuildEntity buildEntity)
+        public async Task<IActionResult> Add(ComputerBuildEntity buildEntity)
         {
             var role = HttpContext.User.FindFirstValue(ClaimTypes.Role);
             var userid = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            _buildService.Add(buildEntity, role, userid);
+            await _buildService.Add(buildEntity, role, userid);
             return Ok();
         }
         [HttpDelete]
-        public IActionResult Delete(ComputerBuildEntity buildEntity)
+        public async Task<IActionResult> Delete(ComputerBuildEntity buildEntity)
         {
-            _buildService.Delete(buildEntity);
+            await _buildService.Delete(buildEntity);
             return Ok();
         }
         [HttpPut]
-        public IActionResult Change(ComputerBuildEntity computerBuildEntity)
+        public async Task<IActionResult> Change(ComputerBuildEntity computerBuildEntity)
         {
-            _buildService.Change(computerBuildEntity);
+            await _buildService.Change(computerBuildEntity);
             return Ok();
         }
     }

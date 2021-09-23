@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PCBuilder.DataAccess;
@@ -15,17 +16,19 @@ namespace PCBuilder.Domain
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IJwtGenerator _jwtGenerator;
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
         public UserService(
             DataContext context, 
             IJwtGenerator jwtGenerator, 
             SignInManager<ApplicationUser> signInManager, 
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _context = context;
             _jwtGenerator = jwtGenerator;
             _signInManager = signInManager;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<ApplicationUser> GetUserByUsername(string username)
@@ -43,19 +46,13 @@ namespace PCBuilder.Domain
 			
             var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
-            if (result.Succeeded)
-            {
-                var roles = await _userManager.GetRolesAsync(user);
-                return new UserDto
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Patronymic = user.Patronymic,
-                    Token = _jwtGenerator.CreateToken(user, roles.ToList()),
-                    UserName = user.UserName,
-                    Roles = roles.ToList()
-                };
-            }
+            if (!result.Succeeded) throw new UnauthorizedAccessException();
+            
+            var roles = await _userManager.GetRolesAsync(user);
+            var userDto = _mapper.Map<UserDto>(user);
+
+            userDto.Token = _jwtGenerator.CreateToken(user, roles.ToList());
+            userDto.Roles = roles.ToList();
 
             throw new UnauthorizedAccessException();
         }

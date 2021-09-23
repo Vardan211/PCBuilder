@@ -13,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using PCBuilder.DataAccess;
 using PCBuilder.DataAccess.Entities;
 using PCBuilder.Domain;
+using PCBuilder.Profiles;
 
 namespace PCBuilder
 {
@@ -56,7 +57,7 @@ namespace PCBuilder
                     }
                 });
             });
-            
+            services.AddAutoMapper(typeof(OrderMappingProfile));
             services.AddDbContext<DataContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Db")));
             services.AddIdentity<ApplicationUser, IdentityRole<int>>()
                 .AddEntityFrameworkStores<DataContext>();

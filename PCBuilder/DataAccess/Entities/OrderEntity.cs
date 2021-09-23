@@ -12,6 +12,6 @@ namespace PCBuilder.DataAccess.Entities
         public string Description { get; set; }
         public decimal Budget { get; set; }
         public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
-        public string OrderStatusId { get; set; }
+        public string OrderStatus { get; set; }
     }
 }
