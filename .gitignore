@@ -11,6 +11,8 @@ nupkg/
 # Rider
 .idea
 
+*.dll
+*.pdb
 # User-specific files
 *.suo
 *.user
