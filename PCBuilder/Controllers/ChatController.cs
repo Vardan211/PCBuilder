@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PCBuilder.Domain;
 
@@ -23,6 +24,9 @@ namespace PCBuilder.Controllers
         {
             var username = HttpContext.User.FindFirstValue(ClaimTypes.Name);
             await _chatService.SendMessage(text, username, chatId);
+        public async Task<IActionResult> SendMessage(string text, int userId, int chatId)
+        {
+            await _chatService.SendMessage(text, userId, chatId);
             return Ok();
         }
 
@@ -48,6 +52,9 @@ namespace PCBuilder.Controllers
         {
             var username = HttpContext.User.FindFirstValue(ClaimTypes.Name);
             await _chatService.AddUserToChat(chatId, username);
+        public async Task<IActionResult> AddUserToChat(int chatId, int userId)
+        {
+            await _chatService.AddUserToChat(chatId, userId);
             return Ok();
         }
 
@@ -65,6 +72,9 @@ namespace PCBuilder.Controllers
         {
             var username = HttpContext.User.FindFirstValue(ClaimTypes.Name);
             var result = _chatService.GetChatsFromUser(username);
+        public IActionResult GetChatsFromUser(int userId)
+        {
+            var result = _chatService.GetChatsFromUser(userId);
             return Ok(result);
         }
     }

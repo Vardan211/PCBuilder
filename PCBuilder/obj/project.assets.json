@@ -1440,26 +1440,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Vardan\\.nuget\\packages\\": {}
+    "C:\\Users\\rave9\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Vardan\\PCBuilder\\PCBuilder\\PCBuilder.csproj",
+      "projectUniqueName": "C:\\Projects\\PCBuilder\\PCBuilder\\PCBuilder.csproj",
       "projectName": "PCBuilder",
-      "projectPath": "C:\\Users\\Vardan\\PCBuilder\\PCBuilder\\PCBuilder.csproj",
-      "packagesPath": "C:\\Users\\Vardan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Vardan\\PCBuilder\\PCBuilder\\obj\\",
+      "projectPath": "C:\\Projects\\PCBuilder\\PCBuilder\\PCBuilder.csproj",
+      "packagesPath": "C:\\Users\\rave9\\.nuget\\packages\\",
+      "outputPath": "C:\\Projects\\PCBuilder\\PCBuilder\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Vardan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\rave9\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
