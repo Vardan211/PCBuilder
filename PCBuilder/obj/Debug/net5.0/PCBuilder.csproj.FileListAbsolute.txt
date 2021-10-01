@@ -127,3 +127,5 @@ C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\Microsoft.IdentityModel.Pro
 C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\Vardan\PCBuilder\PCBuilder\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

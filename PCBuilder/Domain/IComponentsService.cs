@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PCBuilder.DataAccess.Entities;
+using PCBuilder.Domain.Models;
 
 namespace PCBuilder.Domain
 {
@@ -14,6 +15,6 @@ namespace PCBuilder.Domain
         List<ComponentEntity> GetAll();
         List<ComponentEntity> GetByType(int categoryId);
         List<ComponentEntity> GetById(int id);
-        ComputerBuildEntity Assembly(string name,int idGPU, int idCPU, int idMB);
+        ComputerBuildEntity Assembly(ComputerBuildDto buildDto);
     }
 }

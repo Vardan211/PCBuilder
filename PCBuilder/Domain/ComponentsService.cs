@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using PCBuilder.DataAccess;
 using PCBuilder.DataAccess.Entities;
+using PCBuilder.Domain.Models;
 
 namespace PCBuilder.Domain
 {
@@ -11,27 +13,26 @@ namespace PCBuilder.Domain
     {
         private readonly DataContext _context;
         private readonly ICompatibilityService _compatibilityService;
-        public ComponentsService(ICompatibilityService compatibilityService, DataContext context)
+        private readonly IMapper _mapper;
+        public ComponentsService(ICompatibilityService compatibilityService, DataContext context, IMapper mapper)
         {
             _compatibilityService = compatibilityService;
             _context = context;
+            _mapper = mapper;
         }
 
 
-        public ComputerBuildEntity Assembly (string name, int idGPU, int idCPU, int idMB)
+        public ComputerBuildEntity Assembly (ComputerBuildDto buildDto)
         {
-            var gpu = _context.Components.FirstOrDefault(r => r.Id == idGPU);
-            var cpu = _context.Components.FirstOrDefault(r => r.Id == idCPU);
-            var mb = _context.Components.FirstOrDefault(r => r.Id == idMB);
-            var build = new ComputerBuildEntity(); 
-            if (_compatibilityService.compatibility(idGPU, idCPU, idMB))
+            var gpu = _context.Components.FirstOrDefault(r => r.Id == buildDto.gpuId);
+            var cpu = _context.Components.FirstOrDefault(r => r.Id == buildDto.cpuId);
+            var mb = _context.Components.FirstOrDefault(r => r.Id == buildDto.mbId);
+
+            if (_compatibilityService.compatibility(buildDto.gpuId, buildDto.cpuId, buildDto.mbId))
             {
-                build.Name = name;
-                build.GPUId = gpu.Id;
-                build.CPUId = cpu.Id;
-                build.MBId = mb.Id;
-                build.Price = gpu.Price + cpu.Price + mb.Price;
-                return build;
+                var buildEntity = _mapper.Map<ComputerBuildEntity>(buildDto);
+                buildEntity.Price = gpu.Price + cpu.Price + mb.Price;
+                return buildEntity;
             }
             else
             return null;
