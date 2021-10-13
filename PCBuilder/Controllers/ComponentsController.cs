@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PCBuilder.DataAccess.Entities;
 using PCBuilder.Domain;
+using PCBuilder.Domain.Models;
 
 namespace PCBuilder.Controllers
 {
@@ -20,9 +21,9 @@ namespace PCBuilder.Controllers
         }
 
         [HttpPost("build")]
-        public IActionResult Assembling(string name, int idGPU, int idCPU, int idMB)
+        public IActionResult Assembling(ComputerBuildDto computerBuildDto)
         {
-            var result = _componentsService.Assembly(name, idGPU, idCPU, idMB);
+            var result = _componentsService.Assembly(computerBuildDto);
             if (result != null)
                 return Ok(result);
             else

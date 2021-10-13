@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace PCBuilder.Domain.Models
 {
-    public class ComputerBuildDto
+    public class ComputerBuildDto:PCComponent
     {
-        public string name { get; set; }
-        public int gpuId { get; set; }
-        public int cpuId { get; set; }
-        public int mbId { get; set; }
+        public string Name { get; set; }
+
     }
 }

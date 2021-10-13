@@ -24,11 +24,11 @@ namespace PCBuilder.Domain
 
         public ComputerBuildEntity Assembly (ComputerBuildDto buildDto)
         {
-            var gpu = _context.Components.FirstOrDefault(r => r.Id == buildDto.gpuId);
-            var cpu = _context.Components.FirstOrDefault(r => r.Id == buildDto.cpuId);
-            var mb = _context.Components.FirstOrDefault(r => r.Id == buildDto.mbId);
+            var gpu = _context.Components.FirstOrDefault(r => r.Id == buildDto.GpuId);
+            var cpu = _context.Components.FirstOrDefault(r => r.Id == buildDto.CpuId);
+            var mb = _context.Components.FirstOrDefault(r => r.Id == buildDto.MotherboardId);
 
-            if (_compatibilityService.compatibility(buildDto.gpuId, buildDto.cpuId, buildDto.mbId))
+            if (_compatibilityService.compatibility(buildDto.GpuId, buildDto.CpuId, buildDto.MotherboardId))
             {
                 var buildEntity = _mapper.Map<ComputerBuildEntity>(buildDto);
                 buildEntity.Price = gpu.Price + cpu.Price + mb.Price;
@@ -43,15 +43,17 @@ namespace PCBuilder.Domain
             await _context.Components.AddAsync(component);
             await _context.SaveChangesAsync();
         }
-        public async Task Remove(ComponentEntity component)
+        public async Task Remove(ComponentDto componentDto)
         {
-            _context.Components.Remove(component);
+            var componentEntity = _mapper.Map<ComponentEntity>(componentDto);
+            _context.Components.Remove(componentEntity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Update(ComponentEntity component)
+        public async Task Update(ComponentDto componentDto)
         {
-            _context.Components.Update(component);
+            var componentEntity = _mapper.Map<ComponentEntity>(componentDto);
+            _context.Components.Update(componentEntity);
             await _context.SaveChangesAsync();
         }
 

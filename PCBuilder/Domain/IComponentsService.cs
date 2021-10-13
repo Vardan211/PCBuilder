@@ -10,8 +10,8 @@ namespace PCBuilder.Domain
     public interface IComponentsService
     {
         Task Add(ComponentEntity component);
-        Task Remove(ComponentEntity component);
-        Task Update(ComponentEntity component);
+        Task Remove(ComponentDto component);
+        Task Update(ComponentDto component);
         List<ComponentEntity> GetAll();
         List<ComponentEntity> GetByType(int categoryId);
         List<ComponentEntity> GetById(int id);

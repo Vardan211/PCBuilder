@@ -12,6 +12,8 @@ namespace PCBuilder.Profiles
             
             CreateMap<UserDto, ApplicationUser>(MemberList.None).ReverseMap();
             CreateMap<ComputerBuildDto, ComponentEntity>(MemberList.None).ReverseMap();
+            CreateMap<ComputerBuildDto, ComputerBuildEntity>(MemberList.None).ReverseMap();
+            CreateMap<ComponentDto, ComponentEntity>(MemberList.None).ReverseMap();
         }
     }
 }
