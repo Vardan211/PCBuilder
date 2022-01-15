@@ -54,13 +54,13 @@ namespace PCBuilder.Controllers
             return Ok();
         }
         [HttpDelete]
-        public async Task<IActionResult> Delete(ComponentEntity component)
+        public async Task<IActionResult> Delete(ComponentDto component)
         {
             await _componentsService.Remove(component);
             return Ok();
         }
         [HttpPut]
-        public async Task<IActionResult> Update(ComponentEntity component)
+        public async Task<IActionResult> Update(ComponentDto component)
         {
             await _componentsService.Update(component);
             return Ok();

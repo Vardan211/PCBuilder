@@ -54,7 +54,7 @@ namespace PCBuilder.Domain
             userDto.Token = _jwtGenerator.CreateToken(user, roles.ToList());
             userDto.Roles = roles.ToList();
 
-            throw new UnauthorizedAccessException();
+            return userDto;
         }
 
         public async Task<UserDto> Register(RegistrationDto request)
